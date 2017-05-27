@@ -8,7 +8,9 @@
 [Fuzzing and Test Coverage](https://drive.google.com/file/d/0B9erCuXnrQQrZnFsM00yV0x6aFU/view)  
 
 ## Arhitecture Diagram
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/images/Devops%20Pipeline%20Architecture.jpg" width="800">
+The initial setup performed by the ansible scripts is depicted in the diagram below  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/images/Devops%20Pipeline%20Architecture.jpg" width="800">  
+Once the setup is completed, developer can work in the repository and when a push is executed, Jenkins build job will be triggered. If the build succeeds, then the built package is deployed automcatically to the production servers. This is how CI is achieved.
 
 ## Features
 - [Srcipt](https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/droplet.py) to spawn Digital Oceans's droplet instance
