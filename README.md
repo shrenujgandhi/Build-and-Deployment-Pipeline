@@ -8,7 +8,7 @@
 [Fuzzing and Test Coverage](https://drive.google.com/file/d/0B9erCuXnrQQrZnFsM00yV0x6aFU/view)  
 
 ## Arhitecture Diagram
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/images/Devops%20Pipeline%20Architecture.jpg.jpg" width="400">
 
 ## Features
 - [Srcipt](https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/droplet.py) to spawn Digital Oceans's droplet instance
