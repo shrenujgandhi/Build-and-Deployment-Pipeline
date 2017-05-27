@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "post receive hit"
+GIT_WORK_TREE=/home/deploy/app-www/ git checkout -f
+java -jar /var/lib/jenkins/cli.jar -s http://localhost:8090 build iTrust-build

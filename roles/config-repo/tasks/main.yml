@@ -1,0 +1,59 @@
+ 
+ - name: clone git repository
+   command: git clone https://github.com/shrenujgandhi/iTrust.git
+   sudo: no
+   args:
+     chdir: /home/
+
+ - name: configure deploy dir (part 1 of 3)
+   command: mkdir deploy
+   sudo: no
+   args:
+     chdir: /home/
+
+ - name: configure deploy dir (part 2 of 3)
+   command: mkdir app.git
+   sudo: no
+   args:
+     chdir: /home/deploy/
+
+ - name: configure deploy dir (part 3 of 3)
+   command: mkdir app-www
+   sudo: no
+   args:
+     chdir: /home/deploy/
+
+ - name: git init bare 
+   command: git init --bare
+   sudo: no
+   args:
+     chdir: /home/deploy/app.git/
+
+ - name: set post-recieve hook
+   copy: src=post-receive dest=/home/deploy/app.git/hooks/
+   sudo: no
+
+ - name: change permission of hook
+   command: chmod +x post-receive
+   sudo: no
+   args:
+     chdir: /home/deploy/app.git/hooks/
+
+ - name: set git configurations
+   command: git config --global user.email "shrenujgandhi@gmail.com"
+   sudo: no
+   args:
+     chdir: /home/iTrust/iTrust/
+
+ - name: set git configurations
+   command: git config --global user.name "Shrenuj Gandhi"
+   sudo: no
+   args:
+     chdir: /home/iTrust/iTrust/
+
+ - name: set remote for cloned repo
+   command: git remote add app file:///home/deploy/app.git/
+   sudo: no
+   args:
+     chdir: /home/iTrust/iTrust
+

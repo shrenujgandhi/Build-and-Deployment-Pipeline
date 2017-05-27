@@ -1,0 +1,123 @@
+
+ - name: setting jenkins source
+   shell: sudo su - root -c 'wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -'
+   args:
+     executable: /bin/bash
+  
+ - name: adding jenkins key
+   shell: sudo su - root -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+   args:
+     executable: /bin/bash
+  
+ - name: installing nginx, jenkins, git, maven
+   apt: name={{item}} state=installed update_cache=true
+   with_items:
+     - nginx
+     - jenkins
+     - git
+     - maven
+
+ - name: install ansible dependencies
+   apt:
+     pkg: "{{item}}"
+     state: latest
+     update_cache: yes
+   with_items:
+     - python-cffi
+     - libssl-dev
+     - libxml2-dev
+     - libxslt1-dev
+     - libjpeg8-dev
+     - zlib1g-dev
+     - python-pip
+   become: true
+   become_user: root
+
+ - pip:
+     name:  markupsafe
+
+ - name: install ansible
+   shell: pip install ansible==2.2.0
+   register: task_result
+   until: task_result.rc == 0
+   retries: 10
+   delay: 1
+   ignore_errors: yes
+   become: yes
+ 
+ - name: starting nginx
+   service: name=nginx state=started
+
+ - name: copying configuration for overriding security
+   copy: src=override_security_config.xml dest=/tmp/config.xml
+         owner=jenkins group=jenkins mode=755
+
+ - name: stopping jenkins
+   shell: sudo su - root -c 'service jenkins stop'
+   args:
+     executable: /bin/bash
+
+ - name: updating jenkins port to 8090
+   lineinfile: dest=/etc/default/jenkins
+               regexp='^HTTP_PORT'
+               line='HTTP_PORT=8090'
+
+ - name: updating configuration to disable security
+   lineinfile: dest=/etc/default/jenkins
+               line='JAVA_ARGS="-Djenkins.install.runSetupWizard=false"'
+
+ - name: updating configurations to change port
+   lineinfile: dest=/etc/default/jenkins
+               line='JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT"'
+
+ - name: starting jenkins
+   service: name=jenkins state=started
+
+ - name: waiting for jenkins to be ready
+   uri: url="http://localhost:8090" status_code=200
+   register: result
+   until: result.status == 200
+   retries: 60
+   delay: 2
+
+ - name: downloading jenkins cli
+   get_url: url=http://localhost:8090/jnlpJars/jenkins-cli.jar dest=/var/lib/jenkins/cli.jar
+      owner=jenkins group=jenkins mode=755
+
+ - name: installing git plugin
+   shell: java -jar /var/lib/jenkins/cli.jar -s http://127.0.0.1:8090/ install-plugin github
+
+ - name: installing maven plugin
+   shell:  java -jar /var/lib/jenkins/cli.jar -s http://127.0.0.1:8090/ install-plugin maven-plugin
+
+ - name: installing cobertura plugin
+   shell:  java -jar /var/lib/jenkins/cli.jar -s http://127.0.0.1:8090/ install-plugin cobertura
+
+ - name: installing test-results-analyzer plugin
+   shell:  java -jar /var/lib/jenkins/cli.jar -s http://127.0.0.1:8090/ install-plugin test-results-analyzer
+
+ - name: configuring maven plugin (1 of 2)
+   copy: src=hudson.tasks.Maven.xml dest=/var/lib/jenkins/hudson.tasks.Maven.xml
+         owner=jenkins group=jenkins mode=755
+
+ - name: configuring maven plugin (2 of 2)
+   copy: src=jenkins.mvn.GlobalMavenConfig.xml dest=/var/lib/jenkins/jenkins.mvn.GlobalMavenConfig.xml
+         owner=jenkins group=jenkins mode=755
+
+ - name: starting jenkins
+   shell: sudo service jenkins restart
+
+ - name: waiting for jenkins to be ready
+   uri: url="http://localhost:8090" status_code=200
+   register: result
+   until: result.status == 200
+   retries: 60
+   delay: 1
+ 
+ - name: sending config file for build
+   copy: src=config.xml dest=/tmp/config.xml
+
+ - name: create job for build
+   shell: java -jar /var/lib/jenkins/cli.jar -s http://localhost:8090 create-job iTrust-build < /tmp/config.xml || true
+      owner=jenkins group=jenkins mode=755
+

@@ -1,0 +1,41 @@
+# one time setup environment
+- name: setup environment
+  hosts: all
+  sudo: yes
+  roles:
+    - jdk8
+    - tomcat
+    - mysql
+  tags:
+    - setup
+
+# one time setup configurations
+- name: setup build configurations
+  hosts: jenkins
+  sudo: yes
+  roles:
+     - config-jenkins
+     - config-ansible
+     - config-ssh
+     - config-repo
+  tags:
+    - configure-jenkins
+
+# one time build
+- name: jenkins build
+  hosts: jenkins
+  sudo: yes
+  roles:
+    - jenkins-build
+  tags:
+    - jenkins-build
+
+# one time setup configurations
+- name: setup prod configurations
+  hosts: prod
+  sudo: yes
+  roles:
+    - configure-prod
+  tags:
+    - configure-prod
+

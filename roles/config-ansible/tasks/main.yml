@@ -1,0 +1,21 @@
+ 
+ - name: copy ansible scripts (part 1 of 4)
+   sudo: no
+   copy: src=/home/vagrant/milestone3/ansible.cfg dest=/root
+         mode=755
+
+ - name: copy ansible scripts (part 2 of 4)
+   sudo: no
+   copy: src=hosts dest=/root
+         mode=755
+
+ - name: copy ansible scripts (part 3 of 4)
+   sudo: no
+   copy: src=deploy.yml dest=/root
+         mode=755
+
+ - name: copy ansible scripts (part 4 of 4)
+   sudo: no
+   copy: src=trigger.sh dest=/root
+         mode=755
+

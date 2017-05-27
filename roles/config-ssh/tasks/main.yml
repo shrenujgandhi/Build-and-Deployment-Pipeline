@@ -1,0 +1,32 @@
+
+ - name: copy ssh configurations (part 1 of 3)
+   sudo: no
+   copy: src=/home/vagrant/.ssh/id_rsa dest=/root/.ssh/id_rsa
+         owner=jenkins group=jenkins mode=755
+
+ - name: copy ssh configurations (part 2 of 3)
+   sudo: no
+   copy: src=/home/vagrant/.ssh/id_rsa.pub dest=/root/.ssh/id_rsa.pub
+         owner=jenkins group=jenkins mode=755
+
+ - name: copy ssh configurations (part 3 of 3)
+   sudo: no
+   copy: src=/home/vagrant/.ssh/known_hosts dest=/root/.ssh/known_hosts
+         owner=jenkins group=jenkins mode=755
+
+ - name: change permission of root
+   command: chmod 755 /root
+   sudo: no
+   args:
+     chdir: /
+
+ - name: update visudo (part 1 of 2)
+   lineinfile:
+     dest: /etc/sudoers
+     line: 'root ALL= NOPASSWD: /bin/sh'
+
+ - name: update visudo (part 2 of 2)
+   lineinfile:
+     dest: /etc/sudoers
+     line: 'jenkins ALL=(ALL) NOPASSWD:ALL'
+

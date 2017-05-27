@@ -1,0 +1,22 @@
+---
+- hosts: prod
+  sudo: no
+  serial: 1
+  tasks:
+  - name: remove application
+    file:
+      state: absent
+      path: /opt/apache-tomcat-9.0.0.M15/webapps/iTrust.war 
+
+  - name: remove application
+    file:
+      state: absent
+      path: /opt/apache-tomcat-9.0.0.M15/webapps/iTrust
+
+  - name: sleep 15 seconds
+    pause:
+      seconds: 15
+
+  - name: deploy
+    copy: src=/var/lib/jenkins/jobs/iTrust-build/workspace/iTrust/target/iTrust-23.0.0.war dest=/opt/apache-tomcat-9.0.0.M15/webapps/iTrust.war
+

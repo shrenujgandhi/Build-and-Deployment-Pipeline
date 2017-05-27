@@ -1,0 +1,9 @@
+[jenkins]
+107.170.7.148 ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[prod]
+107.170.31.117 ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+107.170.38.10 ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+107.170.40.176 ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+107.170.26.61 ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+162.243.255.203 ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa

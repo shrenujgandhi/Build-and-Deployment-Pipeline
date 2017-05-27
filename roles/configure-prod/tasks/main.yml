@@ -1,0 +1,11 @@
+ 
+ - name: setup configurations
+   sudo: no
+   copy: src=itrust.dump dest=/root
+
+ - name: creating database
+   shell: mysqladmin create itrust
+
+ - name: deploy configurations
+   shell: mysql -u root itrust < itrust.dump
+

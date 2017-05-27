@@ -1,0 +1,45 @@
+ - name: set machine user
+   set_fact: 
+     user: '/root'
+     # user: '/home/vagrant'
+
+ - name: clone git repo
+   shell: git clone https://github.com/shrenujgandhi/iTrust.git  
+
+ - name: configure git credentials (1 of 2)
+   shell: git config --global user.name "Shrenuj Gandhi"
+
+ - name: configure git credentials (2 of 2)
+   shell: git config --global user.email sgandhi4@ncsu.edu
+
+ - name: create git hook
+   copy: src=post-commit dest={{ user }}/iTrust/.git/hooks/post-commit
+         mode=755
+
+ - name: sending job config file
+   copy: src=build_config.xml dest=/tmp/bconfig.xml
+         owner=jenkins group=jenkins mode=755
+
+ - name: creating job
+   shell: java -jar /var/lib/jenkins/cli.jar -s http://localhost:8090 create-job iTrust-fuzz < /tmp/bconfig.xml || true
+      owner=jenkins group=jenkins mode=755
+
+ - name: installing python
+   apt: name={{item}} state=installed update_cache=true
+   with_items:
+     - python
+
+ - name: copy fuzzer file
+   copy: src=fuzzer.py dest={{ user }}/fuzzer.py
+
+ - name: move files to /opt/
+   shell: scp -r /root/* /opt/
+
+ - name: remove files in /root
+   shell: rm -rf iTrust fuzzer.py
+
+ - name: run fuzzer file in background
+   command: python fuzzer.py > out.txt &
+   args:
+     chdir: /opt/
+
