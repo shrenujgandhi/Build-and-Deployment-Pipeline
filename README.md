@@ -10,6 +10,7 @@
 
 ## Arhitecture Diagram
 The initial setup performed by the ansible scripts is depicted in the diagram below  
+
 <img src="https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/images/Architecture%20Diagram.jpg" width="1000">  
 Once the setup is completed, developer can work in the repository and when a push is executed, Jenkins build job will be triggered. If the build succeeds, then the built package is deployed automcatically to the production servers. This is how CI is achieved.
 
