@@ -4,12 +4,17 @@
 # Build and Deployment Pipeline
 
 ## Screencast
-[Build and Deployment Pipeline](https://drive.google.com/file/d/0B9erCuXnrQQrQ2N6bVU0WHV2VnM/view)  
-[Fuzzing and Test Coverage](https://drive.google.com/file/d/0B9erCuXnrQQrZnFsM00yV0x6aFU/view)  
+**Build and Deployment Pipeline**
+
+[![screencast link](https://img.youtube.com/vi/SImp5bnudBs/0.jpg)](https://www.youtube.com/watch?v=SImp5bnudBs)
+
+**Fuzzing and Test Coverage**
+
+[![screencast link](https://img.youtube.com/vi/mHsDARqXMQw/0.jpg)](https://www.youtube.com/watch?v=mHsDARqXMQw)  
 
 ## Arhitecture Diagram
 The initial setup performed by the ansible scripts is depicted in the diagram below  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/images/Architecture%20Diagram.jpg" width="800">  
+<img src="https://github.com/shrenujgandhi/Build-and-Deployment-Pipeline/blob/master/images/Architecture%20Diagram.jpg" width="1000">  
 Once the setup is completed, developer can work in the repository and when a push is executed, Jenkins build job will be triggered. If the build succeeds, then the built package is deployed automcatically to the production servers. This is how CI is achieved.
 
 ## Features
